@@ -38,6 +38,9 @@ var wave;//波纹
 
 var halo;
 
+var dust;//漂浮物
+var dustPic = [];//漂浮物图片
+
 /**
  * 游戏入口
  */
@@ -141,6 +144,14 @@ function init(){
 	//初始化
 	halo = new haloObj();
 	halo.init();
+	
+	//漂浮物初始化
+	for (var i = 0; i < 7; i++) {
+		dustPic[i] = new Image();
+		dustPic[i].src = "img/dust" + i + ".png";
+	}
+	dust = new dustObj();
+	dust.init();
 }
 
 function gameLoop(){
@@ -187,6 +198,9 @@ function gameLoop(){
 	
 	//绘制
 	halo.draw();
+	
+	//绘制漂浮物
+	dust.draw();
 }
 
 /**

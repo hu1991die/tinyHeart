@@ -5,11 +5,16 @@ var fruitObj = function(){
 	this.h = [];//图片高度
 	this.spd = [];//速度
 	this.fruitType = [];
+	this.aneNO = [];//海葵的编号
 	this.orange = new Image();
 	this.blue = new Image();
 }
 
-fruitObj.prototype.num = 30;
+fruitObj.prototype.num = 40;//果实池的果实数量
+
+/**
+ * 初始化函数
+ */
 fruitObj.prototype.init = function(){
 	for (var i = 0; i < this.num; i++) {
 		this.alive[i] = false;
@@ -17,6 +22,7 @@ fruitObj.prototype.init = function(){
 		this.y[i] = 0;
 		this.spd[i] = Math.random() * 0.017 + 0.003;//[0.003,0.02)
 		this.fruitType[i] = "";
+		this.aneNO[i] = 0;
 	}
 	
 	//加载图片
@@ -24,6 +30,9 @@ fruitObj.prototype.init = function(){
 	this.blue.src = "img/blue.png";
 }
 
+/**
+ * 绘制果实
+ */
 fruitObj.prototype.draw = function(){
 	var fruitPic;
 	for (var i = 0; i < this.num; i++) {
@@ -38,7 +47,11 @@ fruitObj.prototype.draw = function(){
 				fruitPic = this.orange;
 			}
 			
-			if(this.h[i] <= 14){
+			if(this.h[i] <= 14){//grow
+				//找到果实是长在哪个海葵上面的
+				var NO = this.aneNO[i];
+				this.x[i] = ane.headx[NO];
+				this.y[i] = ane.heady[NO];
 				this.h[i] += this.spd[i] * deltaTime;
 			}else{
 				this.y[i] -= this.spd[i] * 3 * deltaTime;
@@ -53,11 +66,13 @@ fruitObj.prototype.draw = function(){
 	}
 }
 
+/**
+ * 果实出生
+ * @param {Object} i
+ */
 fruitObj.prototype.born = function(i){
 	//找到一个海葵
-	var aneId = Math.floor(Math.random() * ane.num);//0-49 取整
-	this.x[i] = ane.x[aneId];
-	this.y[i] = canHeight - ane.h[aneId];
+	this.aneNO[i] = Math.floor(Math.random() * ane.num);//0-49 取整;
 	this.h[i] = 0;
 	this.alive[i] = true;
 	
@@ -87,13 +102,16 @@ function fruitMonitor(){
 		}
 	}
 	
-	if(num < 15){
+	if(num < 20){
 		//send fruit
 		sendFruit();
 		return;
 	}
 }
 
+/**
+ * 发送一个果实
+ */
 function sendFruit(){
 	for (var i = 0; i < fruit.num; i++) {
 		if(!fruit.alive[i]){
