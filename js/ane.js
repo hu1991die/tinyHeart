@@ -10,6 +10,7 @@ var aneObj = function(){
 
 //画50个海葵
 aneObj.prototype.num = 50;
+
 //初始化
 aneObj.prototype.init = function(){
 	for (var i = 0; i < this.num; i++) {

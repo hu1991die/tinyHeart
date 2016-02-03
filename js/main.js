@@ -20,8 +20,8 @@ var fruit;//果实
 var mom;//鱼妈妈
 var baby;//鱼宝宝
 
-var mx;
-var my;
+var mx;//鼠标移动的x坐标
+var my;//鼠标移动的y坐标
 
 var babyTails = [];//鱼宝宝尾巴数组
 var babyEyes = [];//鱼宝宝眼睛数组
@@ -36,7 +36,7 @@ var score;//游戏分值统计
 
 var wave;//波纹
 
-var halo;
+var halo;//圆圈
 
 var dust;//漂浮物
 var dustPic = [];//漂浮物图片
